@@ -2,6 +2,7 @@
  *This file contains some common styles used on the app
  */
 @import './common/index';
+@import './common/functions';
 @import './font';
 
 * {
@@ -21,13 +22,18 @@ body {
   min-height: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+
+  font-size: $base-size-unit;
+  // Example of base size change for different resolutions
+  @media (min-width: $breakpoint-small-desktop + 1) {
+    font-size: $base-size-desktop-unit;
+  }
 }
 
 body {
   padding: 0;
   margin: 0;
   color: $primaryTextColor;
-
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -64,13 +70,13 @@ a {
 }
 
 .Layout .Layout-content {
-  min-height: 560px;
+  min-height: r(560px);
 }
 
 html:not(.js) {
-  padding-top: 30px;
+  padding-top: r(30px);
   @media (max-width: $breakpoint-mobile) {
-    padding-top: 40px;
+    padding-top: r(40px);
   }
 }
 .No-JS-message {
@@ -84,5 +90,5 @@ html:not(.js) {
   font-size: 120%;
   color: #fff;
   background-color: #ae0000;
-  padding: 5px;
+  padding: r(5px);
 }

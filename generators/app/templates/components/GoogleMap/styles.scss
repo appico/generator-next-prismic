@@ -1,8 +1,11 @@
+@import './../Layout/common/functions';
+
 .GoogleMap {
   width: 100%;
   height: 25vw;
-  margin: 20px 0;
-  .GoogleMap-map, #GoogleMap-map {
+  margin: r(20px) 0;
+  .GoogleMap-map,
+  #GoogleMap-map {
     width: 100%;
     height: 100%;
   }
