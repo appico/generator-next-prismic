@@ -62,14 +62,15 @@ const Page: StatelessPage<IPageProps> = ({
   linkedToError = false
 }) => {
   const [langFix, setLangFix] = useState(lang)
-  useEffect(() => {
-    // @todo What to do with this?
-    if (false && isErrorFile && !isNode) {
-      const langError = langFromPath(document.location.pathname)
-      dispatch(getPage(req, pathId, langError))
-      setLangFix(langError)
-    }
-  }, [])
+
+  // @todo Rewrite to work on staging
+  // useEffect(() => {
+  //   if (false && isErrorFile && !isNode) {
+  //     const langError = langFromPath(document.location.pathname)
+  //     dispatch(getPage(req, pathId, langError))
+  //     setLangFix(langError)
+  //   }
+  // }, [])
 
   useEffect(() => {
     const onRouteChange = () => {
@@ -218,7 +219,7 @@ Page.getInitialProps = async options => {
   const reqToReturn = req ? { headers: req.headers } : null
 
   // Static fetching next page's content
-  if (!options.isServer && process.env.EXPORT) {
+  if (!isNode && process.env.EXPORT) {
     if (asPath) {
       const content = await getStaticContent(asPath, pathKey, lang)
       const page = content ? content[pathKey] : null
