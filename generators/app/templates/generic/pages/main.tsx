@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 
-import withRedux from 'next-redux-wrapper'
 import Router from 'next/router'
 import { Helmet } from 'react-helmet'
 import dynamic from 'next/dynamic'
@@ -24,9 +23,7 @@ import {
 
 import { MetaData } from '../components'
 
-import { getPage, getStaticContent } from '../store/actions/content'
-import { menuClose } from '../store/actions/ui'
-import initStore from '../store/store'
+import { getPage, getStaticContent } from './../utils/data-fetch'
 
 import PageContainer from '../containers/Page/Page'
 // Dynamic Containers
@@ -66,7 +63,8 @@ const Page: StatelessPage<IPageProps> = ({
 }) => {
   const [langFix, setLangFix] = useState(lang)
   useEffect(() => {
-    if (isErrorFile && !isNode) {
+    // @todo What to do with this?
+    if (false && isErrorFile && !isNode) {
       const langError = langFromPath(document.location.pathname)
       dispatch(getPage(req, pathId, langError))
       setLangFix(langError)
@@ -85,6 +83,7 @@ const Page: StatelessPage<IPageProps> = ({
 
   let toReturnError = null
   const page = content ? content[pathId] : null
+
   if (linkedToError && isExport) {
     window.location.reload()
     toReturnError = <div />
@@ -208,7 +207,7 @@ const Page: StatelessPage<IPageProps> = ({
 }
 
 Page.getInitialProps = async options => {
-  const { store, req, asPath, query } = options
+  const { req, asPath, query } = options
 
   const lang = langFromPath(asPath, req)
   const pathKey = asPath
@@ -221,12 +220,11 @@ Page.getInitialProps = async options => {
   // Static fetching next page's content
   if (!options.isServer && process.env.EXPORT) {
     if (asPath) {
-      await store.dispatch(getStaticContent(asPath, pathKey, lang))
-
-      const { content } = store.getState()
+      const content = await getStaticContent(asPath, pathKey, lang)
       const page = content ? content[pathKey] : null
 
       return {
+        content,
         req: reqToReturn,
         pathId: pathKey,
         lang,
@@ -258,12 +256,10 @@ Page.getInitialProps = async options => {
       isErrorFile = true
     }
 
-    await store.dispatch(getPage(req, pathKey, lang))
-
-    // Make sure the menu is closed
-    await store.dispatch(menuClose())
+    const content = await getPage(req, pathKey, lang)
 
     return {
+      content,
       req: reqToReturn,
       pathId: pathKey,
       lang,
@@ -276,9 +272,4 @@ Page.getInitialProps = async options => {
   }
 }
 
-const mapStateToProps = state => ({
-  content: state.content,
-  dev: state.dev
-})
-
-export default withRedux(initStore, mapStateToProps)(Page)
+export default Page
