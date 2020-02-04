@@ -1,5 +1,6 @@
-@import '../Layout/common/colors.scss';
-@import '../Layout/common/breakpoints.scss';
+@import '../Layout/common/colors';
+@import '../Layout/common/breakpoints';
+@import '../Layout/common/functions';
 
 .CookieMessage-in {
   position: fixed;
@@ -7,13 +8,13 @@
   left: 0;
   right: 0;
   background: #fff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 16px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px r(4px) r(16px);
   padding: 0;
   z-index: 99;
   & > div {
-    padding: 40px 20px;
+    padding: r(40px) r(20px);
     @media (max-width: $breakpoint-mobile) {
-      padding: 30px 20px;
+      padding: r(30px) r(20px);
     }
     & > div {
       display: flex;
@@ -32,11 +33,11 @@
     border: 0;
     color: $primaryTextColor;
     font-weight: 600;
-    font-size: 14px;
+    font-size: r(14px);
     cursor: pointer;
     @media (max-width: $breakpoint-mobile) {
-      padding: 10px 8px;
-      margin-left: -8px;
+      padding: r(10px) r(8px);
+      margin-left: r(-8px);
     }
   }
 }

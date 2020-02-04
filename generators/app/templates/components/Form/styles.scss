@@ -1,19 +1,20 @@
 @import '../Layout/common/colors';
 @import '../Layout/common/breakpoints';
+@import '../Layout/common/functions';
 
 .InputStyled {
-  border: 1px solid $greyLineColor;
-  margin-bottom: 20px;
-  min-height: 62px;
+  border: r(1px) solid $greyLineColor;
+  margin-bottom: r(20px);
+  min-height: r(62px);
   position: relative;
 
   label {
     position: absolute;
-    left: 20px;
-    right: 20px;
+    left: r(20px);
+    right: r(20px);
     color: #888888;
-    top: 14px;
-    font-size: 13px;
+    top: r(14px);
+    font-size: r(13px);
     transition: all 200ms;
     z-index: 1;
     user-select: none;
@@ -24,16 +25,16 @@
   select {
     z-index: 2;
     position: relative;
-    padding: 30px 20px 10px;
+    padding: r(30px) r(20px) r(10px);
     display: block;
     min-width: 100%;
-    min-width: calc(100% + 2px);
+    min-width: calc(100% + #{r(2px)});
     color: #888888;
     font-weight: normal;
-    font-size: 16px;
-    line-height: 21px;
-    margin: -1px;
-    border: 1px solid transparent;
+    font-size: r(16px);
+    line-height: r(21px);
+    margin: r(-1px);
+    border: r(1px) solid transparent;
     outline: none;
     appearance: none;
     border-radius: 0;
@@ -60,7 +61,7 @@
   }
 
   textarea {
-    min-height: 184px;
+    min-height: r(184px);
     max-width: 100%;
   }
 
@@ -70,11 +71,11 @@
 
   .input-icon {
     position: absolute;
-    right: 20px;
-    height: 18px;
-    width: 18px;
+    right: r(20px);
+    height: r(18px);
+    width: r(18px);
     top: 50%;
-    margin-top: -9px;
+    margin-top: r(-9px);
     svg {
       display: block;
       widows: 100%;
@@ -84,11 +85,11 @@
 
   .select-arrow {
     position: absolute;
-    right: 20px;
-    height: 6px;
-    width: 10px;
+    right: r(20px);
+    height: r(6px);
+    width: r(10px);
     top: 50%;
-    margin-top: -3px;
+    margin-top: r(-3px);
     svg {
       display: block;
       widows: 100%;
@@ -98,11 +99,11 @@
 
   .calendar-icon {
     position: absolute;
-    right: 20px;
-    height: 18px;
-    width: 18px;
+    right: r(20px);
+    height: r(18px);
+    width: r(18px);
     top: 50%;
-    margin-top: -9px;
+    margin-top: r(-9px);
     svg {
       display: block;
       widows: 100%;
@@ -150,7 +151,7 @@
   right: 1.5em;
   left: auto;
   display: inline-block;
-  margin-top: 2px;
+  margin-top: r(2px);
   width: 1.25em;
   height: 1.25em;
   background-position: center;
@@ -166,29 +167,29 @@
 
 .DayPicker-NavButton--prev {
   position: absolute;
-  left: 20px;
-  top: 10px;
+  left: r(20px);
+  top: r(10px);
   background: url('/static/images/arrow-dark-thin-down.svg');
   background-repeat: no-repeat;
   background-position: center;
   transform: rotate(90deg);
-  background-size: 12px auto;
+  background-size: r(12px) auto;
   transform-origin: center;
-  width: 20px;
+  width: r(20px);
 }
 
 .DayPicker-NavButton--next {
   position: absolute;
-  right: 16px;
-  top: 10px;
+  right: r(16px);
+  top: r(10px);
   background: url('/static/images/arrow-dark-thin-down.svg');
-  background-size: 12px auto;
+  background-size: r(12px) auto;
   background-repeat: no-repeat;
   background-position: center;
   transform: rotate(-90deg);
   transform-origin: center;
 
-  width: 20px;
+  width: r(20px);
 }
 
 .DayPicker-NavButton--interactionDisabled {
@@ -197,13 +198,13 @@
 
 .DayPicker-Caption {
   display: table-caption;
-  margin-bottom: 20px;
-  padding: 0 20px;
+  margin-bottom: r(20px);
+  padding: 0 r(20px);
   text-align: left;
 
   > div {
     font-weight: 500;
-    font-size: 15px;
+    font-size: r(15px);
     text-align: center;
   }
 }
@@ -222,7 +223,7 @@
   padding: 0.5em;
   color: #4a4a4a;
   text-align: center;
-  font-size: 13px;
+  font-size: r(13px);
 
   abbr[title] {
     border-bottom: none;
@@ -252,7 +253,7 @@
   display: table-cell;
   padding: 0.5em;
   min-width: 1em;
-  border-right: 1px solid #eaecec;
+  border-right: r(1px) solid #eaecec;
   color: #8b9898;
   vertical-align: middle;
   text-align: right;
@@ -292,7 +293,6 @@
 .DayPicker-Day--disabled {
   color: #dce0e0;
   cursor: default;
-
 }
 
 /* Example modifiers */
@@ -337,18 +337,18 @@
 .DayPickerInput-Overlay {
   position: absolute;
   left: 50%;
-  margin-top: 9px;
+  margin-top: r(9px);
   transform: translateX(-50%);
   z-index: 1;
   background: white;
-  border: 1px solid $darkLineColor;
+  border: r(1px) solid $darkLineColor;
   box-shadow: none;
 }
 
 .InputStyled.with-anim {
   label {
-    top: 14px;
-    font-size: 13px;
+    top: r(14px);
+    font-size: r(13px);
     transition: all 200ms;
     z-index: 1;
   }
@@ -360,13 +360,13 @@
       background 200ms;
 
     &:placeholder-shown {
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding-top: r(20px);
+      padding-bottom: r(20px);
 
       & + label {
         color: #888888;
-        transform: translateY(9px);
-        font-size: 16px;
+        transform: translateY(r(9px));
+        font-size: r(16px);
         pointer-events: none;
       }
     }
@@ -391,20 +391,20 @@
 
 .CheckboxStyled {
   border: none;
-  min-height: 24px;
-  padding-top: 3px;
+  min-height: r(24px);
+  padding-top: r(3px);
 
   input {
     padding: 0;
-    margin-right: 20px;
-    width: 24px;
-    min-width: 24px;
-    height: 24px;
+    margin-right: r(20px);
+    width: r(24px);
+    min-width: r(24px);
+    height: r(24px);
     position: absolute;
     left: 0;
     top: 0;
     cursor: pointer;
-    border: 1px solid $greyLineColor;
+    border: r(1px) solid $greyLineColor;
 
     &:after {
       content: '';
@@ -412,8 +412,8 @@
       display: block;
       left: 50%;
       top: 50%;
-      width: 15px;
-      height: 15px;
+      width: r(15px);
+      height: r(15px);
       transform: translate3d(-50%, -50%, 0);
       background: url('/static/images/check-white.svg') center no-repeat;
       background-size: contain;
@@ -429,7 +429,7 @@
 
     &:hover,
     &:focus {
-      border: 1px solid $darkLineColor;
+      border: r(1px) solid $darkLineColor;
     }
   }
 
@@ -437,10 +437,10 @@
     top: 0;
     left: 0;
     right: 0;
-    padding-left: 38px;
+    padding-left: r(38px);
     position: relative;
     cursor: pointer;
-    font-size: 13px;
+    font-size: r(13px);
     font-weight: 400;
     display: block;
     line-height: 1.53;
@@ -450,22 +450,22 @@
 
 .RadioStyled {
   border: none;
-  min-height: 24px;
-  padding-top: 3px;
-  margin-bottom: 17px;
+  min-height: r(24px);
+  padding-top: r(3px);
+  margin-bottom: r(17px);
 
   input {
     padding: 0;
-    margin-right: 20px;
-    width: 24px;
-    min-width: 24px;
-    height: 24px;
+    margin-right: r(20px);
+    width: r(24px);
+    min-width: r(24px);
+    height: r(24px);
     position: absolute;
     left: 0;
     top: 0;
     cursor: pointer;
     border-radius: 50%;
-    border: 1px solid $greyLineColor;
+    border: r(1px) solid $greyLineColor;
 
     &:after {
       content: '';
@@ -473,8 +473,8 @@
       display: block;
       left: 50%;
       top: 50%;
-      width: 16px;
-      height: 16px;
+      width: r(16px);
+      height: r(16px);
       transform: translate3d(-50%, -50%, 0);
       background: $darkLineColor;
       border-radius: 50%;
@@ -489,18 +489,18 @@
 
     &:hover,
     &:focus {
-      border: 1px solid $darkLineColor;
+      border: r(1px) solid $darkLineColor;
     }
   }
 
   label {
-    top: -2px;
+    top: r(-2px);
     left: 0;
     right: 0;
-    padding-left: 38px;
+    padding-left: r(38px);
     position: relative;
     cursor: pointer;
-    font-size: 15px;
+    font-size: r(15px);
     font-weight: 400;
     display: block;
     line-height: 1.6;
@@ -513,14 +513,14 @@ form.submitted .InputStyled {
   textarea,
   select {
     &:invalid {
-      border: 1px solid $errorColor;
+      border: r(1px) solid $errorColor;
     }
   }
   &.with-error {
     input,
     textarea,
     select {
-      border: 1px solid $errorColor !important;
+      border: r(1px) solid $errorColor !important;
       &:not(:placeholder-shown) {
         & + label {
           color: $errorColor;
@@ -539,7 +539,7 @@ html.js form .InputStyled {
   select {
     &:focus,
     &:active {
-      border: 1px solid $darkLineColor;
+      border: r(1px) solid $darkLineColor;
     }
   }
 }
@@ -549,18 +549,18 @@ html.js form .InputStyled {
   width: 100%;
   display: flex;
   position: relative;
-  border: 1px solid $errorColor;
-  padding: 16px;
-  margin-bottom: 20px;
+  border: r(1px) solid $errorColor;
+  padding: r(16px);
+  margin-bottom: r(20px);
   align-items: flex-start;
   justify-content: flex-start;
 
   img {
-    width: 16px;
-    min-width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    margin-top: 3px;
+    width: r(16px);
+    min-width: r(16px);
+    height: r(16px);
+    margin-right: r(8px);
+    margin-top: r(3px);
   }
   p {
     flex-grow: 1;
@@ -575,15 +575,15 @@ html.js form .InputStyled {
 
 .Counter {
   background: #f2f2f2;
-  margin-bottom: 20px;
-  min-height: 62px;
+  margin-bottom: r(20px);
+  min-height: r(62px);
   position: relative;
-  padding: 20px;
+  padding: r(20px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #888888;
-  font-size: 20px;
+  font-size: r(20px);
 }
 .Counter-right  {
   display: flex;
@@ -591,29 +591,29 @@ html.js form .InputStyled {
   justify-content: flex-end;
 }
 .Counter-indicator {
-  font-size: 13px;
-  padding: 0 12px;
-  
+  font-size: r(13px);
+  padding: 0 r(12px);
+
   @media (max-width: $breakpoint-mobile) {
     display: none;
   }
 }
 .Counter-number {
   font-weight: 600;
-  font-size: 15px;
-  width: 43px;
+  font-size: r(15px);
+  width: r(43px);
   text-align: center;
   color: $darkLineColor;
 }
 .Counter-btn {
   padding: 0 !important;
-  width: 32px;
-  height: 32px;
+  width: r(32px);
+  height: r(32px);
   appearance: none;
-  font-size: 18px;
+  font-size: r(18px);
   & > span > span {
     position: relative;
-    margin-top: 3px;
+    margin-top: r(3px);
     display: block;
   }
 }

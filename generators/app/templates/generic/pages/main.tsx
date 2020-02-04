@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 
-import withRedux from 'next-redux-wrapper'
 import Router from 'next/router'
 import { Helmet } from 'react-helmet'
 import dynamic from 'next/dynamic'
@@ -24,9 +23,7 @@ import {
 
 import { MetaData } from '../components'
 
-import { getPage, getStaticContent } from '../store/actions/content'
-import { menuClose } from '../store/actions/ui'
-import initStore from '../store/store'
+import { getPage, getStaticContent } from './../utils/data-fetch'
 
 import PageContainer from '../containers/Page/Page'
 // Dynamic Containers
@@ -65,13 +62,15 @@ const Page: StatelessPage<IPageProps> = ({
   linkedToError = false
 }) => {
   const [langFix, setLangFix] = useState(lang)
-  useEffect(() => {
-    if (isErrorFile && !isNode) {
-      const langError = langFromPath(document.location.pathname)
-      dispatch(getPage(req, pathId, langError))
-      setLangFix(langError)
-    }
-  }, [])
+
+  // @todo Rewrite to work on staging
+  // useEffect(() => {
+  //   if (false && isErrorFile && !isNode) {
+  //     const langError = langFromPath(document.location.pathname)
+  //     dispatch(getPage(req, pathId, langError))
+  //     setLangFix(langError)
+  //   }
+  // }, [])
 
   useEffect(() => {
     const onRouteChange = () => {
@@ -85,6 +84,7 @@ const Page: StatelessPage<IPageProps> = ({
 
   let toReturnError = null
   const page = content ? content[pathId] : null
+
   if (linkedToError && isExport) {
     window.location.reload()
     toReturnError = <div />
@@ -121,6 +121,7 @@ const Page: StatelessPage<IPageProps> = ({
       alt: null
     },
     settings,
+    languagesAlternatesURLs,
     ...rest
   } = page
 
@@ -197,9 +198,17 @@ const Page: StatelessPage<IPageProps> = ({
 
         <link
           rel="alternate"
-          hrefLang="x-default"
-          href={`${websiteURL}/${languages[0]}/${urlWithoutLang}/`}
+          hrefLang={lang}
+          href={`${websiteURL}/${lang}/${urlWithoutLang}/`}
         />
+        {languages.map(l => l !== lang && languagesAlternatesURLs[l] ? (
+          <link
+            key={l}
+            rel="alternate"
+            hrefLang={l}
+            href={`${websiteURL}/${languagesAlternatesURLs[l]}/`}
+          />
+        ) : null)}
       </Helmet>
 
       {renderContainerForPage()}
@@ -208,7 +217,7 @@ const Page: StatelessPage<IPageProps> = ({
 }
 
 Page.getInitialProps = async options => {
-  const { store, req, asPath, query } = options
+  const { req, asPath, query } = options
 
   const lang = langFromPath(asPath, req)
   const pathKey = asPath
@@ -219,14 +228,13 @@ Page.getInitialProps = async options => {
   const reqToReturn = req ? { headers: req.headers } : null
 
   // Static fetching next page's content
-  if (!options.isServer && process.env.EXPORT) {
+  if (!isNode && process.env.EXPORT) {
     if (asPath) {
-      await store.dispatch(getStaticContent(asPath, pathKey, lang))
-
-      const { content } = store.getState()
+      const content = await getStaticContent(asPath, pathKey, lang)
       const page = content ? content[pathKey] : null
 
       return {
+        content,
         req: reqToReturn,
         pathId: pathKey,
         lang,
@@ -258,12 +266,10 @@ Page.getInitialProps = async options => {
       isErrorFile = true
     }
 
-    await store.dispatch(getPage(req, pathKey, lang))
-
-    // Make sure the menu is closed
-    await store.dispatch(menuClose())
+    const content = await getPage(req, pathKey, lang)
 
     return {
+      content,
       req: reqToReturn,
       pathId: pathKey,
       lang,
@@ -276,9 +282,4 @@ Page.getInitialProps = async options => {
   }
 }
 
-const mapStateToProps = state => ({
-  content: state.content,
-  dev: state.dev
-})
-
-export default withRedux(initStore, mapStateToProps)(Page)
+export default Page

@@ -1,6 +1,0 @@
-export const FETCH_CONTENT = 'FETCH_CONTENT'
-export const FETCH_DOCUMENT = 'FETCH_DOCUMENT'
-export const FETCH_CONTENT_TYPE = 'FETCH_CONTENT_TYPE'
-export const UI = 'UI'
-export const MENU_OPENED = 'menuOpened'
-export const COOKIE_MESSAGE_VISIBLE = 'cookieMessageVisible'

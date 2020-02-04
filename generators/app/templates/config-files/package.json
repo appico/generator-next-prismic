@@ -38,7 +38,6 @@
     "mkdirp": "^0.5.1",
     "next": "^8.1.0",<% if (baseComponents.includes('PageTransitions')) { %>
     "next-page-transitions": "^1.0.0-beta.1",<% } %>
-    "next-redux-wrapper": "^1.3.4",
     "next-routes": "^1.4.2",
     "next-seo": "^1.8.0",
     "node-cache": "4.2.0",
@@ -51,9 +50,7 @@
     "react-helmet": "^5.2.1",<% if (baseComponents.includes('LazyImg')) { %>
     "react-intersection-observer": "^8.23.0",<% } %>
     "react-no-ssr": "^1.1.0",
-    "react-redux": "^6.0.0",
     "react-spring": "^8.0.19",
-    "redux": "^4.0.1",
     "regenerator-runtime": "^0.13.3",
     "throttle-debounce": "^2.1.0",
     "ts-node": "8.0.3",

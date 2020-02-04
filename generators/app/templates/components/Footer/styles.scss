@@ -1,8 +1,9 @@
-@import '../Layout/common/index.scss';
+@import '../Layout/common/index';
+@import '../Layout/common/functions';
 
 footer {
-  padding: 20px 0;
-  border-top: 1px solid #ddd;
+  padding: r(20px) 0;
+  border-top: r(1px) solid #ddd;
   p {
     margin: 0;
   }

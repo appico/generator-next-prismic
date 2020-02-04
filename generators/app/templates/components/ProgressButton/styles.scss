@@ -1,5 +1,6 @@
 @import '../Layout/common/breakpoints';
 @import '../Layout/common/colors';
+@import '../Layout/common/functions';
 
 .ProgressButton-wrapper {
   width: 100%;
@@ -7,10 +8,10 @@
 
 .ProgressButton {
   width: auto;
-  min-width: 184px;
+  min-width: r(184px);
   margin-bottom: 0;
   position: relative;
-  min-height: 62px;
+  min-height: r(62px);
   overflow: hidden;
   transition: background 225ms, color 225ms, opacity 200ms;
   background-color: $primaryColor;
@@ -20,7 +21,7 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    height: 44px;
+    height: r(44px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +35,7 @@
 
     &.success,
     &.error {
-      font-size: 16px;
+      font-size: r(16px);
     }
   }
 }
@@ -89,12 +90,12 @@
 
 // Loader
 .ProgressButton .button-state.loading svg {
-  width: 20px;
-  height: 20px;
+  width: r(20px);
+  height: r(20px);
   display: block;
   &.circular {
     animation: rotate 1000ms linear infinite;
-    transform-origin: 10px 10px;
+    transform-origin: r(10px) r(10px);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -125,10 +126,10 @@
   }
   50% {
     stroke-dasharray: 89, 200;
-    stroke-dashoffset: -35px;
+    stroke-dashoffset: r(-35px);
   }
   100% {
     stroke-dasharray: 89, 200;
-    stroke-dashoffset: -124px;
+    stroke-dashoffset: r(-124px);
   }
 }
