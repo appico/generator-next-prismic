@@ -10,6 +10,58 @@ const {
   EXPORT
 } = require('./constants')
 
+const { languages } = require('./../../constants')
+
+const getLanguagesAlternatesURLs = async (api, data, lang, languages) => {
+  let result = {}
+  try {
+    if (data.uid && data.tags && data.tags.length > 0) {
+      for (let i = 0; i < languages.length; i++) {
+        const langO = languages[i]
+        if (lang !== langO) {
+          const alternateLang = data.alternate_languages
+            ? data.alternate_languages.find(
+                item => item.lang === LANGS_PRISMIC[langO]
+              )
+            : false
+          const otherLangUID = alternateLang
+            ? alternateLang.uid
+            : replaceLast(data.uid, `-${lang}`, `-${langO}`) // about-us-de -> about-us-en
+          const otherLangType = alternateLang
+            ? alternateLang.type
+            : data.docType
+            ? data.docType
+            : data.type
+          const otherLangCode = alternateLang
+            ? alternateLang.lang
+            : LANGS_PRISMIC[langO]
+
+          if (otherLangUID) {
+            const otherLangPageURL = await api.getByUID(
+              otherLangType,
+              otherLangUID,
+              {
+                lang: otherLangCode
+              }
+            )
+            if (
+              otherLangPageURL &&
+              otherLangPageURL.tags &&
+              otherLangPageURL.tags.length > 0
+            ) {
+              result[langO] = `${langO}${otherLangPageURL.tags[0]}` // en/about-us
+            }
+          }
+        }
+      }
+    }
+  } catch (e) {
+    log(e)
+    return result
+  }
+  return result
+}
+
 const getAllForType = (
   req,
   docType,
@@ -109,7 +161,7 @@ const getSingleDocument = (
       pageSize: PRISMIC_PER_PAGE,
       page
     })
-    .then(res => {
+    .then(async res => {
       const { results = [], total_pages = 1, total_results_size } = res
       if (total_pages > page) {
         getSingleDocument(
@@ -171,6 +223,15 @@ const getSingleDocument = (
             data.docType = resultsFix[0].type
             data.uid = resultsFix[0].uid
             data.tags = resultsFix[0].tags
+            data.alternate_languages = resultsFix[0].alternate_languages
+
+            // Add alternate languages for the pages
+            data.languagesAlternatesURLs = await getLanguagesAlternatesURLs(
+              api,
+              data,
+              lang,
+              languages
+            )
           }
         }
         cache.set(`${path}-${lang}`, data)
@@ -206,5 +267,6 @@ module.exports = {
   refreshContent,
   getAllForType,
   getSingleDocument,
-  initApi
+  initApi,
+  getLanguagesAlternatesURLs
 }

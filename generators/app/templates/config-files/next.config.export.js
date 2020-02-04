@@ -6,6 +6,7 @@ const prismicApi = require('./server/prismic')
 const sitemap = require('./server/sitemap')
 const { removeUnnecessaryData } = require('./server/prismic/utils')
 const { languages } = require('./constants')
+const { initApi, getLanguagesAlternatesURLs } = require('./server/prismic/functionsCommon')
 
 /**
  * Helper function for searching for a key for a given value
@@ -151,18 +152,21 @@ const getMap = async outDir => {
 
             removeUnnecessaryData(item.type, item.data.body, data)
 
-            fs.writeFile(
-              path.join(outPath, 'content.json'),
-              JSON.stringify(data),
-              err => {
-                if (err) {
-                  console.log(
-                    `Error generating content data file for ${outPath} file`,
-                    err
-                  )
+            initApi(null).then(async api => {
+              data.languagesAlternatesURLs = await getLanguagesAlternatesURLs(api, item, lang, languages)
+              fs.writeFile(
+                path.join(outPath, 'content.json'),
+                JSON.stringify(data),
+                err => {
+                  if (err) {
+                    console.log(
+                      `Error generating content data file for ${outPath} file`,
+                      err
+                    )
+                  }
                 }
-              }
-            )
+              )
+            })
 
             const adjustedPath = `/${lang}${pathPage}`
 

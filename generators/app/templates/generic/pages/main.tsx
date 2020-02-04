@@ -121,6 +121,7 @@ const Page: StatelessPage<IPageProps> = ({
       alt: null
     },
     settings,
+    languagesAlternatesURLs,
     ...rest
   } = page
 
@@ -197,9 +198,17 @@ const Page: StatelessPage<IPageProps> = ({
 
         <link
           rel="alternate"
-          hrefLang="x-default"
-          href={`${websiteURL}/${languages[0]}/${urlWithoutLang}/`}
+          hrefLang={lang}
+          href={`${websiteURL}/${lang}/${urlWithoutLang}/`}
         />
+        {languages.map(l => l !== lang && languagesAlternatesURLs[l] ? (
+          <link
+            key={l}
+            rel="alternate"
+            hrefLang={l}
+            href={`${websiteURL}/${languagesAlternatesURLs[l]}/`}
+          />
+        ) : null)}
       </Helmet>
 
       {renderContainerForPage()}
