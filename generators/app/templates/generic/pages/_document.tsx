@@ -30,6 +30,17 @@ export default class MyDocument extends Document<any, any> {
             content="width=device-width, initial-scale=1, minimum-scale=1"
           />
 
+          {process.env.PREVIEW && (
+            <>
+              <script dangerouslySetInnerHTML={{
+                  __html: `
+                window.prismic = {
+                  endpoint: '<%= prismicApiURL %>'
+                };`}} ></script>
+              <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true"></script>
+            </>
+          )}
+
           <script
             dangerouslySetInnerHTML={{
               __html: `

@@ -9,7 +9,9 @@ export const getPage = async (req: any, path: string, lang: <%- languages.map(la
 
     // Server is running
     if (!process.env.EXPORT) {
-      const res = await fetch(`${baseUrl}/api-page?lang=${lang}&path=${path}`)
+      const res = await fetch(`${baseUrl}/api-page?lang=${lang}&path=${path}`, {
+        headers: req && req.headers ? req.headers : {}
+      })
       const data = await res.json()
       return { [path]: data }
     }

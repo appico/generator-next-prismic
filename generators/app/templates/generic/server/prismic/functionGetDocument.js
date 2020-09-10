@@ -1,3 +1,4 @@
+const Cookies = require('cookies')
 const { log, logError } = require('./../utils')
 const { COMMON_DOCUMENTS, EXPORT } = require('./constants')
 
@@ -25,7 +26,7 @@ const getDocument = (toResetCache, cache) => (
   }
   cache.get(`${path}-${lang}`, (err, value) => {
     const error = err || !value || value === undefined
-    if (error || toResetCache) {
+    if (process.env.PREVIEW || error || toResetCache) {
       // Cache key not found OR cache has been reset
       // So we're gonna fetch data from Prismic.io
 
@@ -51,6 +52,8 @@ const getDocument = (toResetCache, cache) => (
         onError(error, value)
       }
 
+      const cookies = req && req.url ? new Cookies(req) : null
+
       // If not init then we init the primisAPI
       try {
         let prismicAPI = initApi(req)
@@ -67,7 +70,8 @@ const getDocument = (toResetCache, cache) => (
                 onErrorQuery,
                 1,
                 [],
-                EXPORT ? EXPORT_SIMULATED_CACHE : null
+                EXPORT ? EXPORT_SIMULATED_CACHE : null,
+                cookies ? cookies.get('io.prismic.preview') : null
               )
             } catch (err) {
               onErrorInit(err)

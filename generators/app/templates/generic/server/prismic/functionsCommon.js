@@ -1,5 +1,5 @@
 const Prismic = require('prismic-javascript')
-const { log } = require('./../utils')
+const { log, getKeyByValue } = require('./../utils')
 
 const {
   ALL_COMMON_DOCUMENTS,
@@ -137,7 +137,8 @@ const getSingleDocument = (
   onErrorQuery, // @param onError: (err: string, dataFallback?: any) => void,
   page = 1,
   previousPageResults = [],
-  EXPORT_SIMULATED_CACHE = {}
+  EXPORT_SIMULATED_CACHE = {},
+  ref
 ) => {
   let query,
     pathProps,
@@ -159,7 +160,8 @@ const getSingleDocument = (
       lang: LANGS_PRISMIC[lang],
       orderings: '[document.first_publication_date]',
       pageSize: PRISMIC_PER_PAGE,
-      page
+      page,
+      ...(process.env.PREVIEW && ref ? { ref } : {})
     })
     .then(async res => {
       const { results = [], total_pages = 1, total_results_size } = res
@@ -172,7 +174,8 @@ const getSingleDocument = (
           onSuccess,
           onErrorQuery,
           page + 1,
-          previousPageResults.concat(results)
+          previousPageResults.concat(results),
+          ref
         )
         return
       }
@@ -260,6 +263,31 @@ const initApi = req => {
   if (!!req && req.length > 1) {
     Object.assign(initApiParams, { req })
   }
+
+  if (req && (req.query && req.query.token)) {
+    const token = req.query.token
+
+    return Prismic.getApi(CONTENT_API_URL, initApiParams)
+      .then((api) => api.previewSession(token, 
+        (doc) => {
+          const lang = getKeyByValue(LANGS_PRISMIC, doc.lang)
+          try {
+            if (doc.type === 'page') {
+              const pathKey = doc.tags[0].replace(`/${lang}/`, '/')
+                .split('?')[0]
+                .replace(/\/$/, '')
+
+              return `/${lang}${pathKey}`;
+            }
+          } catch (e) {
+            console.log('Error preview Prismic Link Resolution: ', e)
+            return `/${lang}`
+          }
+          return `/${lang}/home`
+        },
+        '/'))
+  }
+
   return Prismic.getApi(CONTENT_API_URL, initApiParams)
 }
 

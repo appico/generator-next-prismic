@@ -9,7 +9,9 @@ export const getDocument = (
     const protocol = req ? req.headers['x-forwarded-proto'] || 'http' : ''
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
     const res = await fetch(
-      `${baseUrl}/api-document?id=${documentId}&type=${documenType}`
+      `${baseUrl}/api-document?id=${documentId}&type=${documenType}`, {
+        credentials: 'include'
+      }
     )
     return await res.json()
   } catch (e) {
