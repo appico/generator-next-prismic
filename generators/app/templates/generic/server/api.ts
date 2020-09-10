@@ -1,5 +1,7 @@
 export {} // Avoid typescript issue with "Cannot redeclare block-scoped variable"
 
+const { initApi } = require('./prismic/functionsCommon')
+
 const iFetch = require('isomorphic-unfetch')
 const bodyParser = require('body-parser')
 const { body, validationResult } = require('express-validator/check')
@@ -16,6 +18,14 @@ module.exports = (
   path: any,
   dev: boolean
 ) => {
+  // Example preview endpoint for NodeJS with ExpressJS 
+  app.get('/preview', function (req, res) {    
+    initApi(req)
+      .then((url) => {
+        res.redirect(302, url);
+      });
+  });
+
   // Query for page
   app.get('/api-page', (req, res) => {
     try {

@@ -134,7 +134,7 @@ const getDocumentsPage = (toResetCache, cache) => (
 
     cache.get(`content-result-${path}-${lang}`, (err, value) => {
       const error = err || !value || value === undefined
-      if (error || toResetCache) {
+      if (process.env.PREVIEW || error || toResetCache) {
         // Cache key not found OR cache has been reset
         // So we're gonna fetch data from Prismic.io
 

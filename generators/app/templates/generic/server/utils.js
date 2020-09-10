@@ -64,3 +64,16 @@ module.exports.log = content => {
 module.exports.logError = content => {
   console.log(`${chalk.red(content)} ${chalk.grey(`at ${new Date()}`)} `)
 }
+
+/**
+ * Helper function for searching for a key for a given value
+ */
+module.exports.getKeyByValue = (object, value) => {
+  return Object.keys(object).find(key => object[key] === value)
+}
+
+module.exports.replaceLast = (text, what, replacement) => {
+  var pcs = text.split(what)
+  var lastPc = pcs.pop()
+  return pcs.join(what) + replacement + lastPc
+}

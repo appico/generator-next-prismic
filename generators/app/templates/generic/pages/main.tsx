@@ -251,7 +251,7 @@ Page.getInitialProps = async options => {
   }
 
   // Avoid querying data with next.js-hot-reloading
-  if (isNextHR(req ? req.url : asPath)) return
+  if (isNextHR(req ? req.url : asPath)) return {}
 
   // Fetching page's content
   try {

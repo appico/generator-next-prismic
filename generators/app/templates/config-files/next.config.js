@@ -107,6 +107,7 @@ module.exports = withSass(
           "process.env.NODE_ENV": JSON.stringify(
             process.env.NODE_ENV || "development"
           ),
+          'process.env.PREVIEW': (process.env.PREVIEW || false) && !(process.env.EXPORT || false),
           "process.env.EXPORT": process.env.EXPORT || false,
           "process.env.API_ENDPOINT": JSON.stringify(process.env.API_ENDPOINT),
           "process.env.STAGING": process.env.STAGING

@@ -70,7 +70,6 @@ const Page = ({
       <Demo 
         lang={langFix}
         <% if (baseComponents.includes('Form')) { %>addForm<% } %>
-        <% if (baseComponents.includes('Button')) { %>addButton<% } %>
         <% if (baseComponents.includes('GoogleMap')) { %>addGMaps<% } %>
       />
       {/* --- */}<% } %>
