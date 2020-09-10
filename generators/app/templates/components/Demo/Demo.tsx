@@ -1,29 +1,20 @@
 import * as React from 'react'
 
-import { LazyImg, Transform,
-  Button<% if (baseComponents.includes('GoogleMap')) { %>,
-  GoogleMap<% } %>
-} from '../'
-
-import DemoForm from './DemoForm'
+import { LazyImg, Transform } from '../'
 
 type TDemoProps = {
   lang: string
-  addButton?: boolean
-  addForm?: boolean
-  addGMaps?: boolean
 }
 
+import './styles.scss'
+
 const Demo = ({
-  lang, 
-  addButton = false, 
-  addForm = false, 
-  addGMaps = false
+  lang
 }: TDemoProps) => (<div className="generator-demo-content">
       <p>
         Welcome to your new project with <b>React/Next.js and Prismic</b>!
         <br />
-        Demo component on <b>Page.tsx</b>. Let's remove it
+        <small>Demo component on <b>Page.tsx</b>. Let's remove it</small>
       </p>
       <Transform from={[0, 0, 1.35, -15]} delay={350}>
         <LazyImg
@@ -36,11 +27,6 @@ const Demo = ({
           }}
         />
       </Transform>
-      {(addButton || addForm || addGMaps) &&<div className="generator-white-wrapper">
-        {addForm && <DemoForm lang={lang} />}
-        {addButton && <p><Button>Button component</Button></p>}
-        {addGMaps && <GoogleMap gpsPosition={{latitude: 53.5498002, longitude: 9.9943386}}/>}
-      </div>}
     </div>)
 
 export default Demo

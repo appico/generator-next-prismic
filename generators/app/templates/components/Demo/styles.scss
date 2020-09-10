@@ -1,0 +1,26 @@
+@import '../Layout/common/index.scss';
+@import '../Layout/common/functions';
+
+// TODO: Remove this file and its parent Demo folder
+
+.generator-demo-content {
+  position: relative;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 60px);
+  padding: r(40px) r(20px);
+  max-width: 100%;
+
+  p {
+    margin: r(30px) 0 r(20px);
+  }
+
+  img {
+    width: r(500px);
+    max-width: 70vw;
+  }
+}
