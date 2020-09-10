@@ -71,3 +71,9 @@ module.exports.logError = content => {
 module.exports.getKeyByValue = (object, value) => {
   return Object.keys(object).find(key => object[key] === value)
 }
+
+module.exports.replaceLast = (text, what, replacement) => {
+  var pcs = text.split(what)
+  var lastPc = pcs.pop()
+  return pcs.join(what) + replacement + lastPc
+}

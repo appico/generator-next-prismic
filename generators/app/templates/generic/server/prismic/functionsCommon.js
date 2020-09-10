@@ -1,5 +1,5 @@
 const Prismic = require('prismic-javascript')
-const { log, getKeyByValue } = require('./../utils')
+const { log, replaceLast, getKeyByValue } = require('./../utils')
 
 const {
   ALL_COMMON_DOCUMENTS,

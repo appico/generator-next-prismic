@@ -7,6 +7,7 @@
 - [Development](#development)
 - [Deployment](#deployment)
 - [Static export](#static-export)
+- [Preview data](#preview-data)
 - [Prismic-app connection](#prismic-app-connection)
 
 
@@ -71,6 +72,24 @@ npm run export
 ```
 
 App will be built into /build folder.
+
+
+
+
+<a id="preview-data"></a>
+### Preview Data
+To test the app with Preview data from Prismic:
+
+```
+PREVIEW=1 npm run dev
+```
+
+Or in an external preview server 
+
+```
+PREVIEW=1 npm run build && PREVIEW=1 npm run start
+```
+
 
 <a id="prismic-app-connection"></a>
 ### Prismic-app connection
