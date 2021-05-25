@@ -32,43 +32,20 @@ export default class MyDocument extends Document<any, any> {
 
           {process.env.PREVIEW && (
             <>
-              <script dangerouslySetInnerHTML={{
+              <script
+                dangerouslySetInnerHTML={{
                   __html: `
                 window.prismic = {
                   endpoint: '<%= prismicApiURL %>'
-                };`}} ></script>
-              <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true"></script>
+                };`
+                }}
+              />
+              <script
+                type="text/javascript"
+                src="https://static.cdn.prismic.io/prismic.min.js?new=true"
+              />
             </>
           )}
-
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-            if (document) {
-              document.documentElement.classList.add('js')
-              document.documentElement.classList.add('fade')
-              let device = false
-              if (window.isDevice) {
-                device = true
-              } else {
-                if (
-                  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                    navigator.userAgent
-                  )
-                ) {
-                  device = true
-                  window.isDevice = true
-                }
-              }
-              if (device) {
-                document.documentElement.classList.add('device')
-              }
-              window.addEventListener('load', function(e) {
-                document.documentElement.classList.remove('fade')
-              })
-            }`
-            }}
-          />
 
           <link
             rel="apple-touch-icon-precomposed"
@@ -166,8 +143,23 @@ export default class MyDocument extends Document<any, any> {
           <meta name="theme-color" content="<%= primaryColor %>" />
           <link rel="manifest" href="/static/manifest.webmanifest" />
 
-          <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" />
-          <script src="/static/async-font.js" />
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `
+                // ADD IE11 Polyfill
+                if (document && navigator) {
+                  if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+                    var tag = document.createElement("script");
+                    tag.src = "https://cdnjs.cloudflare.com/ajax/libs/core-js/3.12.1/minified.js";
+                    document.getElementsByTagName("head")[0].appendChild(tag);
+
+                    window.isIE = true;
+                  }
+                }
+              `
+            }}
+          />
         </Head>
         <body>
           <Main />
